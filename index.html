@@ -18,6 +18,7 @@ body{
   color:#d8ffd8;
   min-height:100vh;
   overflow-x:hidden;
+  padding-bottom:35px;
 }
 
 .screen{
@@ -135,6 +136,7 @@ button:disabled{
   margin:25px 0;
   min-height:45px;
   color:#fff;
+  overflow-wrap:anywhere;
 }
 
 .errors{
@@ -191,6 +193,7 @@ button:disabled{
   font-size:14px;
   color:#d2e8d2;
   line-height:1.6;
+  overflow-wrap:anywhere;
 }
 
 .hostTitle{
@@ -210,6 +213,28 @@ button:disabled{
   box-shadow:0 0 18px rgba(100,255,100,.25);
 }
 
+.noWinnerBox{
+  background:#21150a;
+  border:2px solid #ffad42;
+  border-radius:12px;
+  padding:18px;
+  margin:15px 0;
+  text-align:center;
+  box-shadow:0 0 18px rgba(255,150,40,.2);
+}
+
+.noWinnerTitle{
+  color:#ffbd67;
+  font-size:25px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.noWinnerText{
+  color:#ffe3bf;
+  line-height:1.6;
+}
+
 .winnerName{
   font-size:23px;
   font-weight:bold;
@@ -222,6 +247,7 @@ button:disabled{
   font-weight:bold;
   text-align:center;
   margin:20px 0;
+  overflow-wrap:anywhere;
 }
 
 .small{
@@ -231,6 +257,23 @@ button:disabled{
 
 .hidden{
   display:none!important;
+}
+
+/* Firma discreta del creador */
+.creatorSignature{
+  position:fixed;
+  right:9px;
+  bottom:7px;
+  z-index:1000;
+  padding:4px 7px;
+  border:1px solid rgba(124,255,124,.3);
+  border-radius:6px;
+  background:rgba(5,8,5,.88);
+  color:#8fc98f;
+  font-size:10px;
+  letter-spacing:1.5px;
+  opacity:.8;
+  pointer-events:none;
 }
 
 @media(max-width:500px){
@@ -246,6 +289,14 @@ button:disabled{
   .code{
     font-size:27px;
   }
+
+  .box{
+    padding:15px;
+  }
+
+  .big{
+    font-size:24px;
+  }
 }
 </style>
 </head>
@@ -254,132 +305,84 @@ button:disabled{
 
 <!-- LOBBY -->
 <section id="lobby" class="screen active">
-
   <h1>☢️ Zona Cero</h1>
   <p>Multijugador</p>
 
   <div class="box">
-
-    <button onclick="createRoom()">
-      👑 Crear partida
-    </button>
-
-    <button class="secondary" onclick="showJoin()">
-      👤 Unirse a partida
-    </button>
-
+    <button onclick="createRoom()">👑 Crear partida</button>
+    <button class="secondary" onclick="showJoin()">👤 Unirse a partida</button>
   </div>
 
   <div id="joinBox" class="box hidden">
-
     <h2>Unirse a partida</h2>
 
-    <input
-      id="playerName"
-      maxlength="25"
-      placeholder="Nombre del jugador"
-    >
+    <input id="playerName" maxlength="25"
+      placeholder="Nombre del jugador">
 
-    <input
-      id="roomInput"
-      maxlength="8"
-      placeholder="Código de sala"
-    >
+    <input id="roomInput" maxlength="8"
+      placeholder="Código de sala">
 
-    <button onclick="joinRoom()">
-      🚪 Entrar
-    </button>
-
-    <button class="secondary" onclick="backMenu()">
-      Volver
-    </button>
-
+    <button onclick="joinRoom()">🚪 Entrar</button>
+    <button class="secondary" onclick="backMenu()">Volver</button>
   </div>
 
   <div id="lobbyStatus" class="status"></div>
-
 </section>
-
 
 <!-- PANEL DEL ANFITRIÓN -->
 <section id="hostScreen" class="screen">
-
   <h1>☢️ Zona Cero</h1>
 
   <div class="box">
-
-    <div class="hostTitle">
-      👑 Panel del anfitrión
-    </div>
+    <div class="hostTitle">👑 Panel del anfitrión</div>
 
     <p style="text-align:center">
       Tú eres el espectador y controlador de la partida.
     </p>
 
-    <p style="text-align:center">
-      Código de sala:
-    </p>
-
+    <p style="text-align:center">Código de sala:</p>
     <div id="hostCode" class="code"></div>
 
-    <input
-      id="secretInput"
+    <input id="secretInput"
       placeholder="Escribe la palabra secreta"
-      maxlength="30"
-    >
+      maxlength="30">
 
-    <button onclick="startRoom()">
+    <button id="startButton" onclick="startRoom()">
       ☢️ Iniciar partida
     </button>
 
     <div id="hostStatus" class="status">
       Esperando jugadores...
     </div>
-
   </div>
 
   <div class="box">
-
     <h2>👥 Jugadores</h2>
-
     <div id="hostPlayers"></div>
-
   </div>
-
 </section>
-
 
 <!-- ALERTA PARA JUGADORES -->
 <section id="alertScreen" class="screen">
-
   <h1>☢️ ALERTA</h1>
 
   <div class="box">
-
-    <div class="big">
-      ☢️ La partida comenzó
-    </div>
+    <div class="big">☢️ La partida comenzó</div>
 
     <p style="text-align:center">
       Prepárate para sobrevivir a la radiación.
     </p>
 
     <div id="alertName" class="status"></div>
-
   </div>
-
 </section>
-
 
 <!-- JUEGO -->
 <section id="gameScreen" class="screen">
-
   <h1>☢️ Zona Cero</h1>
 
   <div class="box">
-
     <div id="gamePlayerName" class="status"></div>
-
     <div id="word" class="word"></div>
 
     <div class="errors">
@@ -395,59 +398,46 @@ button:disabled{
     </div>
 
     <div id="keyboard" class="keyboard"></div>
-
   </div>
-
 </section>
-
 
 <!-- PERDIÓ -->
 <section id="lossScreen" class="screen">
-
   <h1>☢️ ELIMINADO</h1>
 
   <div class="box">
-
-    <div class="big">
-      😵 Has perdido
-    </div>
+    <div class="big">😵 Has perdido</div>
 
     <p style="text-align:center">
       Llegaste a 10 errores.
     </p>
 
     <div id="lossWinner" class="status"></div>
-
   </div>
-
 </section>
-
 
 <!-- GANÓ -->
 <section id="winScreen" class="screen">
-
   <h1>🛡️ ¡GANASTE!</h1>
 
   <div class="box">
-
-    <div class="big">
-      🛡️ ¡Te salvaste!
-    </div>
+    <div class="big">🛡️ ¡Te salvaste!</div>
 
     <p style="text-align:center">
       ☢️ ¡Te salvaste de la radiación!
     </p>
-
   </div>
-
 </section>
 
+<!-- Iniciales del creador -->
+<div class="creatorSignature" aria-label="Creado por RMMV">
+  RMMV
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 
 <script>
-
 const firebaseConfig = {
   apiKey:"AIzaSyD3Vj51pxEHsFhziShSkHdIegpGr43Jpbw",
   authDomain:"escapa-de-la-radiactividad.firebaseapp.com",
@@ -473,7 +463,7 @@ let roomCode = "";
 let roomRef = null;
 let roomData = null;
 let entered = false;
-
+let checkingEnd = false;
 
 const LETTERS = [
   "A","B","C","D","E","F","G","H","I","J","K","L","M",
@@ -482,36 +472,23 @@ const LETTERS = [
 
 const MAX_ERRORS = 10;
 
-
-/* =========================
-   UTILIDADES
-========================= */
+/* UTILIDADES */
 
 function show(id){
-
   document.querySelectorAll(".screen").forEach(el=>{
     el.classList.remove("active");
   });
 
   const el = document.getElementById(id);
-
-  if(el){
-    el.classList.add("active");
-  }
+  if(el) el.classList.add("active");
 }
-
 
 function status(text){
-
   document.getElementById("lobbyStatus").textContent = text;
-
 }
 
-
 function escapeHtml(str){
-
-  return String(str || "").replace(/[&<>"']/g, function(c){
-
+  return String(str || "").replace(/[&<>"']/g, c=>{
     return {
       "&":"&amp;",
       "<":"&lt;",
@@ -519,258 +496,190 @@ function escapeHtml(str){
       '"':"&quot;",
       "'":"&#039;"
     }[c];
-
   });
-
 }
-
 
 function normalizeLetter(letter){
-
-  return letter
-    .toUpperCase()
+  return letter.toUpperCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g,"");
-
 }
-
 
 function normalizeWord(word){
-
-  return word
-    .toUpperCase()
-    .trim()
-    .replace(/\s+/g," ");
-
+  return word.toUpperCase().trim().replace(/\s+/g," ");
 }
 
-
-/* =========================
-   MENÚ
-========================= */
+/* MENÚ */
 
 function showJoin(){
-
   document.getElementById("joinBox").classList.remove("hidden");
-
 }
-
 
 function backMenu(){
-
   document.getElementById("joinBox").classList.add("hidden");
-
 }
 
-
-/* =========================
-   CREAR SALA
-========================= */
+/* CREAR SALA */
 
 async function createRoom(){
+  try{
+    roomCode = Math.random().toString(36)
+      .substring(2,8).toUpperCase();
 
-  roomCode = Math.random()
-    .toString(36)
-    .substring(2,8)
-    .toUpperCase();
+    roomRef = db.ref("rooms/" + roomCode);
 
-  roomRef = db.ref("rooms/" + roomCode);
+    await roomRef.set({
+      hostId:myId,
+      secret:"",
+      status:"waiting",
+      winner:"",
+      winnerName:"",
+      noWinner:false,
+      players:{}
+    });
 
-  const data = {
+    document.getElementById("hostCode").textContent = roomCode;
+    document.getElementById("secretInput").disabled = false;
+    document.getElementById("startButton").disabled = false;
 
-    hostId: myId,
-
-    secret: "",
-
-    status: "waiting",
-
-    winner: "",
-
-    winnerName: "",
-
-    players: {}
-
-  };
-
-  await roomRef.set(data);
-
-  document.getElementById("hostCode").textContent = roomCode;
-
-  show("hostScreen");
-
-  listenRoom();
-
+    listenRoom();
+    show("hostScreen");
+  }catch(error){
+    status("❌ No se pudo crear la sala. Revisa tu conexión.");
+    console.error(error);
+  }
 }
 
-
-/* =========================
-   UNIRSE
-========================= */
+/* UNIRSE */
 
 async function joinRoom(){
+  const nameInput = document.getElementById("playerName");
+  const roomInput = document.getElementById("roomInput");
 
-  const nameInput =
-    document.getElementById("playerName");
-
-  const roomInput =
-    document.getElementById("roomInput");
-
-  const name =
-    nameInput.value.trim().slice(0,25);
-
-  const code =
-    roomInput.value.trim().toUpperCase();
+  const name = nameInput.value.trim().slice(0,25);
+  const code = roomInput.value.trim().toUpperCase();
 
   if(!name){
-
     status("⚠️ Escribe tu nombre.");
-
     return;
-
   }
 
   if(!code){
-
     status("⚠️ Escribe el código de la sala.");
-
     return;
-
   }
 
-  roomCode = code;
+  try{
+    roomCode = code;
+    roomRef = db.ref("rooms/" + roomCode);
 
-  roomRef = db.ref("rooms/" + roomCode);
+    const snap = await roomRef.once("value");
 
-  const snap = await roomRef.once("value");
+    if(!snap.exists()){
+      status("❌ Esa sala no existe.");
+      return;
+    }
 
-  if(!snap.exists()){
+    const data = snap.val();
 
-    status("❌ Esa sala no existe.");
+    if(data.status !== "waiting"){
+      status("❌ La partida ya comenzó.");
+      return;
+    }
 
-    return;
+    const players = data.players || {};
+    const playerIds = Object.keys(players);
 
+    if(!players[myId] && playerIds.length >= 10){
+      status("❌ La sala ya tiene 10 jugadores.");
+      return;
+    }
+
+    if(players[myId]){
+      await roomRef.child("players/" + myId).update({
+        name:name,
+        role:"player"
+      });
+    }else{
+      await roomRef.child("players/" + myId).set({
+        name:name,
+        role:"player",
+        guessed:{},
+        state:"waiting"
+      });
+    }
+
+    document.getElementById("lobbyStatus").textContent =
+      "✅ Te registraste como " + name;
+
+    listenRoom();
+  }catch(error){
+    status("❌ Error al unirse. Revisa tu conexión.");
+    console.error(error);
   }
-
-  const data = snap.val();
-
-  if(data.status !== "waiting"){
-
-    status("❌ La partida ya comenzó.");
-
-    return;
-
-  }
-
-  const players = data.players || {};
-
-  const playerIds = Object.keys(players);
-
-  if(playerIds.length >= 10){
-
-    status("❌ La sala ya tiene 10 jugadores.");
-
-    return;
-
-  }
-
-  if(players[myId]){
-
-    await roomRef.child("players/" + myId).update({
-
-      name:name,
-      role:"player"
-
-    });
-
-  }else{
-
-    await roomRef.child("players/" + myId).set({
-
-      name:name,
-
-      role:"player",
-
-      guessed:{},
-
-      state:"waiting"
-
-    });
-
-  }
-
-  document.getElementById("lobbyStatus").textContent =
-    "✅ Te registraste como " + name;
-
-  listenRoom();
-
 }
 
-
-/* =========================
-   ESCUCHAR SALA
-========================= */
+/* ESCUCHAR SALA */
 
 function listenRoom(){
-
   if(!roomRef) return;
 
-  roomRef.on("value", snap=>{
+  roomRef.off("value");
 
+  roomRef.on("value", snap=>{
     if(!snap.exists()) return;
 
     roomData = snap.val();
 
     renderPlayers();
 
-    const isHost =
-      roomData.hostId === myId;
+    const isHost = roomData.hostId === myId;
 
     if(isHost){
-
       renderHostDashboard();
-
       show("hostScreen");
 
+      // NUEVO: comprobar si todos fueron eliminados.
+      checkAllPlayersLost();
       return;
-
     }
 
-    if(!roomData.players ||
-       !roomData.players[myId]){
-
+    if(!roomData.players || !roomData.players[myId]){
       return;
-
     }
 
-    const player =
-      roomData.players[myId];
+    const player = roomData.players[myId];
+
+    // NUEVO: avisar también a los jugadores si nadie ganó.
+    if(roomData.noWinner){
+      document.getElementById("lossWinner").textContent =
+        "☢️ La partida terminó. ¡Nadie ganó! Todos los jugadores fueron eliminados.";
+      show("lossScreen");
+      return;
+    }
 
     if(roomData.winner){
-
-      const winnerName =
-        roomData.winnerName || "Otro jugador";
+      const winnerName = roomData.winnerName || "Otro jugador";
 
       if(roomData.winner === myId){
-
         show("winScreen");
-
       }else{
-
         document.getElementById("lossWinner").textContent =
           "🏆 Ganó: " + winnerName;
-
         show("lossScreen");
-
       }
-
       return;
+    }
 
+    if(player.state === "lost"){
+      document.getElementById("lossWinner").textContent =
+        "☢️ Estás eliminado. La partida continúa para los demás jugadores.";
+      show("lossScreen");
+      return;
     }
 
     if(roomData.status === "playing"){
-
       if(!entered){
-
         entered = true;
 
         document.getElementById("alertName").textContent =
@@ -779,186 +688,172 @@ function listenRoom(){
         show("alertScreen");
 
         setTimeout(()=>{
-
           enterGame();
-
         },1800);
-
       }else{
-
         enterGame();
-
       }
-
     }
-
   });
-
 }
 
-
-/* =========================
-   CONTADOR
-========================= */
+/* CONTADOR */
 
 function renderPlayers(){
+  const players = roomData && roomData.players
+    ? roomData.players : {};
 
-  const players =
-    roomData && roomData.players
-      ? roomData.players
-      : {};
+  const count = Object.keys(players).length;
+  const hostStatus = document.getElementById("hostStatus");
 
-  const count =
-    Object.keys(players).length;
-
-  const hostStatus =
-    document.getElementById("hostStatus");
-
-  if(hostStatus){
-
+  if(hostStatus && !roomData.noWinner && !roomData.winner){
     hostStatus.textContent =
-      "👥 Jugadores registrados: " +
-      count +
-      " / 10";
-
+      "👥 Jugadores registrados: " + count + " / 10";
   }
-
 }
 
+/* NUEVO: DETECTAR QUE TODOS FUERON ELIMINADOS */
 
-/* =========================
-   PANEL DEL ANFITRIÓN
-========================= */
+async function checkAllPlayersLost(){
+  if(checkingEnd || !roomData || !roomRef) return;
+
+  if(roomData.hostId !== myId) return;
+  if(roomData.status !== "playing") return;
+  if(roomData.winner || roomData.noWinner) return;
+
+  const players = roomData.players || {};
+  const ids = Object.keys(players);
+
+  // Debe haber al menos un jugador.
+  if(ids.length === 0) return;
+
+  // La partida termina sin ganador solo si todos están eliminados.
+  const everyoneLost = ids.every(id=>{
+    return players[id] && players[id].state === "lost";
+  });
+
+  if(!everyoneLost) return;
+
+  checkingEnd = true;
+
+  try{
+    // Transacción para evitar declarar empate si ya existe ganador.
+    await roomRef.transaction(current=>{
+      if(!current) return;
+
+      if(current.winner || current.noWinner) return;
+
+      if(current.status !== "playing") return;
+
+      const currentPlayers = current.players || {};
+      const currentIds = Object.keys(currentPlayers);
+
+      if(
+        currentIds.length > 0 &&
+        currentIds.every(id =>
+          currentPlayers[id] &&
+          currentPlayers[id].state === "lost"
+        )
+      ){
+        current.noWinner = true;
+        current.status = "finished";
+      }
+
+      return current;
+    });
+  }catch(error){
+    console.error("No se pudo comprobar el final de la partida:",error);
+  }finally{
+    checkingEnd = false;
+  }
+}
+
+/* PANEL DEL ANFITRIÓN */
 
 function renderHostDashboard(){
-
-  const container =
-    document.getElementById("hostPlayers");
-
+  const container = document.getElementById("hostPlayers");
   if(!container || !roomData) return;
 
-  const players =
-    roomData.players || {};
-
-  const ids =
-    Object.keys(players);
+  const players = roomData.players || {};
+  const ids = Object.keys(players);
 
   let html = "";
 
-  if(roomData.winner){
-
+  // NUEVO: aviso destacado de que nadie ganó.
+  if(roomData.noWinner){
+    html += `
+      <div class="noWinnerBox">
+        <div class="noWinnerTitle">☢️ PARTIDA TERMINADA</div>
+        <div class="big">😵 ¡NADIE GANÓ!</div>
+        <div class="noWinnerText">
+          Todos los jugadores fueron eliminados al llegar
+          a ${MAX_ERRORS} errores.
+        </div>
+        <p class="noWinnerText">
+          La partida terminó sin ganador.
+        </p>
+      </div>
+    `;
+  }else if(roomData.winner){
     html += `
       <div class="winnerBox">
         <div class="big">🏆 ¡GANADOR!</div>
-
         <div class="winnerName">
           ${escapeHtml(roomData.winnerName || "Jugador")}
         </div>
-
-        <div>
-          🛡️ ¡Se salvó de la radiación!
-        </div>
+        <div>🛡️ ¡Se salvó de la radiación!</div>
       </div>
     `;
-
   }
 
   if(ids.length === 0){
-
-    html += `
-      <div class="status">
-        Esperando jugadores...
-      </div>
-    `;
-
+    html += `<div class="status">Esperando jugadores...</div>`;
     container.innerHTML = html;
-
     return;
-
   }
 
+  // Lista de jugadores y quién quedó eliminado.
   ids.forEach(id=>{
-
-    const player =
-      players[id] || {};
-
-    const name =
-      player.name || "Jugador";
-
-    const guessed =
-      player.guessed || {};
-
-    const guessedLetters =
-      Object.keys(guessed).sort();
+    const player = players[id] || {};
+    const name = player.name || "Jugador";
+    const guessed = player.guessed || {};
+    const guessedLetters = Object.keys(guessed).sort();
 
     let errors = 0;
 
     if(roomData.secret){
-
-      const secret =
-        normalizeWord(roomData.secret);
+      const secret = normalizeWord(roomData.secret);
 
       guessedLetters.forEach(letter=>{
-
-        if(!secret.includes(letter)){
-
-          errors++;
-
-        }
-
+        if(!secret.includes(letter)) errors++;
       });
-
     }
 
     let progress = "—";
 
     if(roomData.secret){
+      const secret = normalizeWord(roomData.secret);
 
-      const secret =
-        normalizeWord(roomData.secret);
+      progress = secret.split("").map(char=>{
+        if(char === " ") return " ";
 
-      progress =
-        secret
-          .split("")
-          .map(char=>{
-
-            if(char === " ") return " ";
-
-            const letter =
-              normalizeLetter(char);
-
-            return guessed[letter]
-              ? char
-              : "_";
-
-          })
-          .join(" ");
-
+        const letter = normalizeLetter(char);
+        return guessed[letter] ? char : "_";
+      }).join(" ");
     }
 
-    let stateText =
-      "⏳ Esperando";
+    let stateText = "⏳ Esperando";
 
-    if(player.state === "playing"){
-      stateText = "🎮 Jugando";
-    }
+    if(player.state === "playing") stateText = "🎮 Jugando";
+    if(player.state === "lost") stateText = "☢️ ELIMINADO";
+    if(roomData.winner === id) stateText = "🏆 ¡GANÓ!";
 
-    if(player.state === "lost"){
-      stateText = "☢️ Eliminado";
-    }
-
-    if(roomData.winner === id){
-      stateText = "🏆 ¡GANÓ!";
-    }
-
-    const lettersText =
-      guessedLetters.length
-        ? guessedLetters.join(", ")
-        : "Ninguna";
+    const lettersText = guessedLetters.length
+      ? guessedLetters.join(", ")
+      : "Ninguna";
 
     html += `
       <div class="playerCard">
-
         <div class="playerName">
           👤 ${escapeHtml(name)}
         </div>
@@ -976,405 +871,283 @@ function renderHostDashboard(){
         </div>
 
         <div class="playerInfo">
-          <b>Progreso:</b>
-          ${escapeHtml(progress)}
+          <b>Progreso:</b> ${escapeHtml(progress)}
         </div>
 
+        ${player.state === "lost" ? `
+          <div class="playerInfo error">
+            ☢️ ${escapeHtml(name)} quedó eliminado.
+          </div>
+        ` : ""}
       </div>
     `;
-
   });
 
   container.innerHTML = html;
 
+  if(roomData.noWinner){
+    document.getElementById("hostStatus").textContent =
+      "☢️ Partida terminada: todos fueron eliminados. Nadie ganó.";
+
+    document.getElementById("startButton").disabled = true;
+    document.getElementById("secretInput").disabled = true;
+  }else if(roomData.winner){
+    document.getElementById("hostStatus").textContent =
+      "🏆 Partida terminada. Ganador: " +
+      (roomData.winnerName || "Jugador");
+
+    document.getElementById("startButton").disabled = true;
+    document.getElementById("secretInput").disabled = true;
+  }else{
+    document.getElementById("startButton").disabled =
+      roomData.status !== "waiting";
+
+    document.getElementById("secretInput").disabled =
+      roomData.status !== "waiting";
+  }
 }
 
-
-/* =========================
-   INICIAR PARTIDA
-========================= */
+/* INICIAR PARTIDA */
 
 async function startRoom(){
+  if(!roomData || roomData.hostId !== myId) return;
 
-  if(!roomData) return;
-
-  if(roomData.hostId !== myId){
-
+  if(roomData.status !== "waiting"){
+    document.getElementById("hostStatus").textContent =
+      "⚠️ Esta partida ya fue iniciada.";
     return;
-
   }
 
-  const secretInput =
-    document.getElementById("secretInput");
-
-  const secret =
-    normalizeWord(secretInput.value);
+  const secretInput = document.getElementById("secretInput");
+  const secret = normalizeWord(secretInput.value);
 
   if(!secret){
-
     document.getElementById("hostStatus").textContent =
       "⚠️ Escribe una palabra secreta.";
-
     return;
-
   }
 
-  const players =
-    roomData.players || {};
-
-  const ids =
-    Object.keys(players);
+  const players = roomData.players || {};
+  const ids = Object.keys(players);
 
   if(ids.length === 0){
-
     document.getElementById("hostStatus").textContent =
       "⚠️ Necesitas al menos un jugador.";
-
     return;
-
   }
 
-  const updates = {};
-
-  updates["secret"] = secret;
-
-  updates["status"] = "playing";
-
-  updates["winner"] = "";
-
-  updates["winnerName"] = "";
+  const updates = {
+    secret:secret,
+    status:"playing",
+    winner:"",
+    winnerName:"",
+    noWinner:false
+  };
 
   ids.forEach(id=>{
-
     updates["players/" + id + "/guessed"] = {};
-
     updates["players/" + id + "/state"] = "playing";
-
   });
 
-  await roomRef.update(updates);
-
+  try{
+    await roomRef.update(updates);
+  }catch(error){
+    document.getElementById("hostStatus").textContent =
+      "❌ No se pudo iniciar la partida.";
+    console.error(error);
+  }
 }
 
-
-/* =========================
-   ENTRAR AL JUEGO
-========================= */
+/* ENTRAR AL JUEGO */
 
 function enterGame(){
+  if(!roomData || !roomData.players ||
+     !roomData.players[myId]) return;
 
-  if(!roomData ||
-     !roomData.players ||
-     !roomData.players[myId]){
+  const player = roomData.players[myId];
 
+  if(roomData.noWinner){
+    document.getElementById("lossWinner").textContent =
+      "☢️ La partida terminó. ¡Nadie ganó!";
+    show("lossScreen");
     return;
-
   }
 
-  const player =
-    roomData.players[myId];
+  if(player.state === "lost"){
+    document.getElementById("lossWinner").textContent =
+      "☢️ Estás eliminado. La partida continúa para los demás jugadores.";
+    show("lossScreen");
+    return;
+  }
 
   document.getElementById("gamePlayerName").textContent =
     "👤 " + (player.name || "Jugador");
 
   renderGame();
-
   show("gameScreen");
-
 }
 
-
-/* =========================
-   MOSTRAR JUEGO
-========================= */
+/* MOSTRAR JUEGO */
 
 function renderGame(){
+  if(!roomData || !roomData.players ||
+     !roomData.players[myId]) return;
 
-  if(!roomData ||
-     !roomData.players ||
-     !roomData.players[myId]){
+  const player = roomData.players[myId];
 
+  if(roomData.noWinner){
+    document.getElementById("lossWinner").textContent =
+      "☢️ La partida terminó. ¡Nadie ganó!";
+    show("lossScreen");
     return;
-
   }
-
-  const player =
-    roomData.players[myId];
 
   if(roomData.winner){
-
     if(roomData.winner === myId){
-
       show("winScreen");
-
     }else{
-
       document.getElementById("lossWinner").textContent =
-        "🏆 Ganó: " +
-        (roomData.winnerName || "Otro jugador");
-
+        "🏆 Ganó: " + (roomData.winnerName || "Otro jugador");
       show("lossScreen");
-
     }
-
     return;
-
   }
 
-  const secret =
-    normalizeWord(roomData.secret || "");
+  if(player.state === "lost"){
+    document.getElementById("lossWinner").textContent =
+      "☢️ Estás eliminado. La partida continúa para los demás jugadores.";
+    show("lossScreen");
+    return;
+  }
 
-  const guessed =
-    player.guessed || {};
+  const secret = normalizeWord(roomData.secret || "");
+  const guessed = player.guessed || {};
 
   let wrong = 0;
 
   Object.keys(guessed).forEach(letter=>{
-
-    if(!secret.includes(letter)){
-
-      wrong++;
-
-    }
-
+    if(!secret.includes(letter)) wrong++;
   });
 
-  document.getElementById("errorCount").textContent =
-    wrong;
-
-  const danger =
-    Math.min(100, (wrong / MAX_ERRORS) * 100);
+  document.getElementById("errorCount").textContent = wrong;
 
   document.getElementById("dangerBar").style.width =
-    danger + "%";
+    Math.min(100,(wrong / MAX_ERRORS) * 100) + "%";
 
   let wordHTML = "";
 
   secret.split("").forEach(char=>{
-
     if(char === " "){
-
       wordHTML += "&nbsp;&nbsp;";
-
     }else{
-
-      const letter =
-        normalizeLetter(char);
-
-      wordHTML +=
-        guessed[letter]
-          ? escapeHtml(char)
-          : "_";
-
+      const letter = normalizeLetter(char);
+      wordHTML += guessed[letter] ? escapeHtml(char) : "_";
       wordHTML += " ";
-
     }
-
   });
 
-  document.getElementById("word").innerHTML =
-    wordHTML;
+  document.getElementById("word").innerHTML = wordHTML;
 
   keyboard(guessed);
-
-  /*
-    Primero comprobamos si resolvió la palabra.
-  */
 
   let solved = true;
 
   secret.split("").forEach(char=>{
-
     if(char === " ") return;
-
-    const letter =
-      normalizeLetter(char);
-
-    if(!guessed[letter]){
-
-      solved = false;
-
-    }
-
+    if(!guessed[normalizeLetter(char)]) solved = false;
   });
 
   if(solved && secret){
-
     claimVictory();
-
     return;
-
   }
 
-  /*
-    Ahora comprobamos los 10 errores.
-  */
-
   if(wrong >= MAX_ERRORS){
-
     if(player.state !== "lost"){
-
-      roomRef
-        .child("players/" + myId + "/state")
-        .set("lost");
-
+      roomRef.child("players/" + myId + "/state").set("lost");
     }
 
     document.getElementById("gameStatus").textContent =
       "☢️ Llegaste a 10 errores. Estás eliminado.";
 
     return;
-
   }
 
   document.getElementById("gameStatus").textContent =
     "Adivina la palabra. Te quedan " +
-    (MAX_ERRORS - wrong) +
-    " errores.";
-
+    (MAX_ERRORS - wrong) + " errores.";
 }
 
-
-/* =========================
-   TECLADO
-========================= */
+/* TECLADO */
 
 function keyboard(guessed){
-
-  const container =
-    document.getElementById("keyboard");
-
+  const container = document.getElementById("keyboard");
   let html = "";
 
   LETTERS.forEach(letter=>{
-
-    const used =
-      guessed[letter];
+    const used = guessed[letter];
 
     html += `
-      <button
-        ${used ? "disabled" : ""}
-        onclick="guess('${letter}')"
-      >
+      <button ${used ? "disabled" : ""}
+        onclick="guess('${letter}')">
         ${letter}
       </button>
     `;
-
   });
 
   container.innerHTML = html;
-
 }
 
-
-/* =========================
-   ADIVINAR LETRA
-========================= */
+/* ADIVINAR LETRA */
 
 async function guess(letter){
+  if(!roomData || roomData.status !== "playing" ||
+     roomData.winner || roomData.noWinner) return;
 
-  if(!roomData ||
-     roomData.status !== "playing" ||
-     roomData.winner){
+  if(!roomData.players || !roomData.players[myId]) return;
 
-    return;
+  const player = roomData.players[myId];
 
-  }
+  if(player.state === "lost") return;
 
-  if(!roomData.players ||
-     !roomData.players[myId]){
+  const guessed = player.guessed || {};
+  if(guessed[letter]) return;
 
-    return;
-
-  }
-
-  const player =
-    roomData.players[myId];
-
-  if(player.state === "lost"){
-
-    return;
-
-  }
-
-  const guessed =
-    player.guessed || {};
-
-  if(guessed[letter]){
-
-    return;
-
-  }
-
-  await roomRef
-    .child("players/" + myId + "/guessed/" + letter)
-    .set(true);
-
+  await roomRef.child(
+    "players/" + myId + "/guessed/" + letter
+  ).set(true);
 }
 
-
-/* =========================
-   GANAR
-========================= */
+/* GANAR */
 
 async function claimVictory(){
+  if(!roomData || roomData.winner || roomData.noWinner) return;
 
-  if(!roomData ||
-     roomData.winner){
+  const player = roomData.players[myId];
+  if(!player || player.state === "lost") return;
 
-    return;
+  const winnerRef = roomRef.child("winner");
 
-  }
-
-  const player =
-    roomData.players[myId];
-
-  if(!player) return;
-
-  const winnerRef =
-    roomRef.child("winner");
-
-  const result =
-    await winnerRef.transaction(current=>{
-
-      if(current){
-
-        return;
-
-      }
-
-      return myId;
-
-    });
+  const result = await winnerRef.transaction(current=>{
+    if(current) return;
+    return myId;
+  });
 
   if(result.committed){
-
     await roomRef.update({
-
-      winnerName:
-        player.name || "Jugador",
-
-      status:"finished"
-
+      winnerName:player.name || "Jugador",
+      status:"finished",
+      noWinner:false
     });
-
   }
-
 }
 
-
-/* =========================
-   EFECTO DE LLUVIA
-========================= */
+/* EFECTO DE LLUVIA */
 
 function makeRain(){
-
   // Decoración opcional.
-  // Se mantiene la función para no romper el juego.
-
 }
 
 </script>
-
 </body>
-  </html>
+</html>
